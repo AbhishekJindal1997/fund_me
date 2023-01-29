@@ -7,13 +7,11 @@ import Background from "../components/Background";
 
 const Home = () => {
   return (
-    <>
-      <div className='isolate bg-white'>
-        <Background />
-        <Header />
-        <Banner />
-      </div>
-    </>
+    <div className='isolate'>
+      <Background />
+      <Header />
+      <Banner />
+    </div>
   );
 };
 

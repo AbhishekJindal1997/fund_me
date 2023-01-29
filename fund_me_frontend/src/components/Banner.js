@@ -13,17 +13,10 @@ function Banner() {
             Our mission is to empower individuals to make a difference by
             providing a simple and convenient platform for donating to the
             charities and organizations that matter to you.
-            {/* With our
-          user-friendly app, you can donate to your favorite causes
-          quickly and easily, without any hassle. Whether you want to
-          support a local charity, a national organization, or a global
-          cause, our fundraising platform makes it easy to give back and
-          make a real impact. Join us today and help make the world a
-          better place, one donation at a time. */}
           </p>
           <div className='mt-10 flex items-center justify-center gap-x-6'>
             <a
-              href='/'
+              href='/explore-campaigns'
               className='rounded-md bg-indigo-600 px-3.5 py-1.5 text-base font-semibold leading-7 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>
               Donate Now
             </a>

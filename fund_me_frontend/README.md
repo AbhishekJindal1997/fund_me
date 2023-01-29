@@ -33,3 +33,7 @@ REACT-TOASTIFY
 - Error Handling in forms
 - using tailwind css and tailwind ui for designing components
 - hosted using firebase
+- using state for state management, wanted to use react but didnt had enough time
+- wanted to refactor the code
+- just basic codeing, no try catch
+- very less error handling

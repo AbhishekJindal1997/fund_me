@@ -6,13 +6,11 @@ import Background from "../components/Background";
 
 function Login() {
   return (
-    <>
-      <div className='isolate bg-white'>
-        <Background />
-        <Header />
-        <LoginForm />
-      </div>
-    </>
+    <div className='isolate'>
+      <Background />
+      <Header />
+      <LoginForm />
+    </div>
   );
 }
 
