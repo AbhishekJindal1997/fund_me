@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { db } from "../config";
-import { collection, addDoc } from "firebase/firestore";
+import { addDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { campaingsCollectionRef } from "../firebase-collections";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -18,7 +18,6 @@ const RaiseFundsForm = () => {
   const [imageThree, setImageThree] = useState("");
   const [imageFour, setImageFour] = useState("");
 
-  const campaingsCollectionRef = collection(db, "Campaigns");
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {

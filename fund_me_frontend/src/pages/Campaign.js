@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom";
 const Campaign = () => {
   const location = useLocation();
   const campaign = location.state.campaign;
+  console.log("cmapign ingo", campaign);
 
   return (
     <div className='isolate'>
@@ -24,6 +25,7 @@ const Campaign = () => {
         RequesterName={campaign.RequesterName}
         Category={campaign.Category}
         DonationLimit={campaign.DonationLimit}
+        id={campaign.id}
       />
     </div>
   );

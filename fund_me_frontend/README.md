@@ -22,6 +22,7 @@ FIREBASE
 
 - npm install firebase
 - npm install -g firebase-tools
+- npm i --save react-firebase-hooks
 
 REACT-TOASTIFY
 
@@ -34,6 +35,10 @@ REACT-TOASTIFY
 - using tailwind css and tailwind ui for designing components
 - hosted using firebase
 - using state for state management, wanted to use react but didnt had enough time
-- wanted to refactor the code
-- just basic codeing, no try catch
+- added collections and subcollections in firestore
+
+- just basic coding, no try catch
 - very less error handling
+
+- simplify the code by, breaking compontnes into smaller bits and create a folder in components with the same name as pages and put all the components inside that folder
+- wanted to refactor the code

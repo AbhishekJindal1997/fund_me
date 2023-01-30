@@ -17,7 +17,6 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const userDetails = localStorage.getItem("email");
-  console.log("user details", userDetails);
 
   // Deleting data from local storage to log out of google account
   const googleLogout = () => {
