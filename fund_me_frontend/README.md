@@ -31,15 +31,9 @@ REACT-TOASTIFY
 ### Summary
 
 - Responsive
-- Error Handling in forms
+- Browser side Error Handling in forms
 - using tailwind css and tailwind ui for designing components
-- hosted using firebase
-- using props and local state for state management, wanted to use redux/recoil but didnt had enough time
+- Hosted using firebase
+- using props and local state for state management
 - added collections and subcollections in firestore
 - updating,creating and reading the firestore database
-
-- just basic coding, no try catch
-- very less error handling
-
-- simplify the code by, breaking compontnes into smaller bits and create a folder in components with the same name as pages and put all the components inside that folder
-- wanted to refactor the code
