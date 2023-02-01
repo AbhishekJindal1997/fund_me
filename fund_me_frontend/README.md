@@ -34,8 +34,9 @@ REACT-TOASTIFY
 - Error Handling in forms
 - using tailwind css and tailwind ui for designing components
 - hosted using firebase
-- using state for state management, wanted to use react but didnt had enough time
+- using props and local state for state management, wanted to use redux but didnt had enough time
 - added collections and subcollections in firestore
+- updating the firestore database
 
 - just basic coding, no try catch
 - very less error handling

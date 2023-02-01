@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, updateDoc, doc } from "firebase/firestore";
 import { db } from "../config";
 
 const CampaignInfo = ({
@@ -15,17 +15,27 @@ const CampaignInfo = ({
   AmountRequired,
   RequesterName,
   DonationLimit,
+  progressMeterWidth,
   id,
 }) => {
-  //
   const [username, setUsername] = useState("");
   const [amount, setAmount] = useState(0);
+
+  let totalAmount = 0;
+  let progressMeterBar;
+
+  // Update progress meter in firestore database
+  const updateProgressMeter = async (id, progressMeterWidth) => {
+    const progressMeterDoc = doc(db, "Campaigns", id);
+    const updateField = { progressMeterWidth: progressMeterBar };
+    await updateDoc(progressMeterDoc, updateField);
+    console.log("progress meter bar ", progressMeterBar);
+  };
 
   // Camapign Features array
   const features = [
     { name: "Amount Needed", description: "$" + AmountRequired },
     { name: "Requested By", description: RequesterName },
-    { name: "Amount Received", description: "unknown" },
     { name: "Donation Limit", description: "$" + DonationLimit },
   ];
 
@@ -37,10 +47,9 @@ const CampaignInfo = ({
     "Donations"
   );
 
-  const [donationsReceived, loading, error] = useCollectionData(
+  const [donationsReceived, loading] = useCollectionData(
     campaingsSubCollectionRef
   );
-  console.log("testing subcollections", donationsReceived);
 
   // Hanndles Donation form
   const handleSubmit = async (event) => {
@@ -103,6 +112,60 @@ const CampaignInfo = ({
             className='rounded-lg bg-gray-100'
             alt='campaign 1'
           />
+        </div>
+
+        {/* Donations Received */}
+        <div className='overflow-hidden  bg-gray-100 w-full mx-auto shadow sm:rounded-lg lg:w-10/12'>
+          <div className='px-4 py-5 sm:px-6'>
+            <h3 className='text-lg font-medium leading-6 text-gray-900'>
+              Donations Received
+            </h3>
+            <p className='mt-1 max-w-2xl text-sm text-gray-500'>
+              A list of Some of the top donations received for this cause
+            </p>
+          </div>
+          <div className='hidden sm:block' aria-hidden='true'>
+            <div className='py-0'>
+              <div className='border-t border-gray-200'></div>
+            </div>
+          </div>
+          <dl>
+            {loading && "Loading..."}
+            {donationsReceived?.map((donationReceived) => {
+              totalAmount += parseFloat(donationReceived.Amount);
+              return (
+                <div
+                  key={Math.random()}
+                  className='bg-gray-100 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6'>
+                  <dt className='text-sm font-medium text-gray-500'>
+                    {donationReceived.Username}
+                  </dt>
+                  <dd className='mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0'>
+                    $ {donationReceived.Amount}
+                  </dd>
+                </div>
+              );
+            })}
+          </dl>
+          <div className='hidden sm:block' aria-hidden='true'>
+            <div className='py-0'>
+              <div className='border-t border-gray-200'></div>
+            </div>
+          </div>
+          <div className='bg-gray-100 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6'>
+            <dt className='text-sm font-bold text-gray-500'>Amount Raised</dt>
+            <dd className='mt-1 text-sm  font-bold text-gray-900 sm:col-span-2 sm:mt-0'>
+              $ {totalAmount}
+            </dd>
+          </div>
+          <div>
+            {
+              (progressMeterBar = Math.ceil(
+                (totalAmount / parseFloat(AmountRequired)) * 100
+              ))
+            }{" "}
+            %
+          </div>
         </div>
 
         {/* Donations Form */}
@@ -169,33 +232,11 @@ const CampaignInfo = ({
               </button>
             </div>
           </form>
-        </div>
-
-        {/* Donations Received */}
-        <div className='overflow-hidden bg-gray-100 w-9/12 shadow sm:rounded-lg'>
-          <div className='px-4 py-5 sm:px-6'>
-            <h3 className='text-lg font-medium leading-6 text-gray-900'>
-              Donations Received
-            </h3>
-            <p className='mt-1 max-w-2xl text-sm text-gray-500'>
-              A list of Some of the top donations received for this cause
-            </p>
-          </div>
-          <dl>
-            {loading && "Loading..."}
-            {donationsReceived?.map((donationReceived) => (
-              <div
-                key={Math.random()}
-                className='bg-gray-100 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6'>
-                <dt className='text-sm font-medium text-gray-500'>
-                  {donationReceived.Username}
-                </dt>
-                <dd className='mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0'>
-                  $ {donationReceived.Amount}
-                </dd>
-              </div>
-            ))}
-          </dl>
+          <button
+            onClick={() => updateProgressMeter(id, progressMeterWidth)}
+            className='rounded-md bg-indigo-600 px-3.5 py-1.5 text-base font-semibold leading-7 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>
+            Test Now
+          </button>
         </div>
       </div>
     </div>

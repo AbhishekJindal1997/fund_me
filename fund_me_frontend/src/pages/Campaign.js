@@ -26,6 +26,7 @@ const Campaign = () => {
         Category={campaign.Category}
         DonationLimit={campaign.DonationLimit}
         id={campaign.id}
+        progressMeterWidth={campaign.progressMeterWidth}
       />
     </div>
   );

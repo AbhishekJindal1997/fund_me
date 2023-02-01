@@ -12,6 +12,8 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 const AllCampaigns = () => {
   const [campaings, setCampaigns] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [campaignsPerPage] = useState(3);
 
   // Get all the camapigns information
   const getAllCampaigns = async () => {
@@ -27,6 +29,21 @@ const AllCampaigns = () => {
   const filteredCampaigns = campaings?.filter(
     (campaign) => campaign.Category === selectedCategory
   );
+
+  // Get indexes of first page, last page for pagination
+  const indexOfLastCampaign = currentPage * campaignsPerPage;
+  const indexOfFirstCampaign = indexOfLastCampaign - campaignsPerPage;
+  // Getting the current campaign to display on screen
+  const currentCampaign =
+    filteredCampaigns.length > 0
+      ? filteredCampaigns?.slice(indexOfFirstCampaign, indexOfLastCampaign)
+      : campaings?.slice(indexOfFirstCampaign, indexOfLastCampaign);
+
+  // Total campaigns length
+  const totalCampaigns =
+    filteredCampaigns?.length > 0
+      ? filteredCampaigns?.length
+      : campaings?.length;
 
   // Every time page loads, we call the following functions to fetch data
   useEffect(() => {
@@ -114,57 +131,44 @@ const AllCampaigns = () => {
         </div>
 
         {/* Display All the campaigns */}
-        <div className='mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0'>
-          {filteredCampaigns.length > 0
-            ? filteredCampaigns.map((campaign) => (
-                <Link
-                  key={campaign.id}
-                  to={`/campaign/${campaign.id}`}
-                  state={{ campaign: campaign }}>
-                  <div className='relative h-80 w-full overflow-hidden rounded-lg bg-white group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1'>
-                    <img
-                      src={campaign.image}
-                      alt='campaign image'
-                      className='h-full w-full object-cover object-center'
-                    />
-                  </div>
-                  <h3 className='mt-6 text-sm text-gray-500'>
-                    {campaign.Category}
-                  </h3>
-                  <p className='text-base font-semibold text-gray-900'>
-                    {campaign.CampaignName}
-                  </p>
-                  <p className='text-indigo-600 font-semibold'>
-                    ${campaign.AmountRequired}
-                  </p>
-                </Link>
-              ))
-            : campaings.map((campaign) => (
-                <Link
-                  key={campaign.id}
-                  to={`/campaign/${campaign.id}`}
-                  state={{ campaign: campaign }}>
-                  <div className='relative h-80 w-full overflow-hidden rounded-lg bg-white group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1'>
-                    <img
-                      src={campaign.image}
-                      alt='campaign image'
-                      className='h-full w-full object-cover object-center'
-                    />
-                  </div>
-                  <h3 className='mt-6 text-sm text-gray-500'>
-                    {campaign.Category}
-                  </h3>
-                  <p className='text-base font-semibold text-gray-900'>
-                    {campaign.CampaignName}
-                  </p>
-                  <p className='text-indigo-600 font-semibold'>
-                    ${campaign.AmountRequired}
-                  </p>
-                </Link>
-              ))}
+        <div className='mt-6space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0'>
+          {currentCampaign.map((campaign) => (
+            <Link
+              key={campaign.id}
+              className='pt-8'
+              to={`/campaign/${campaign.id}`}
+              state={{ campaign: campaign }}>
+              <div className='relative h-80 w-full overflow-hidden rounded-lg bg-white group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1'>
+                <img
+                  src={campaign.image}
+                  alt='campaign image'
+                  className='h-full w-full object-cover object-center'
+                />
+              </div>
+              <div className=' mt-4 w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700'>
+                <div
+                  className='bg-blue-600 h-2.5 rounded-full'
+                  style={{ width: `${campaign.progressMeterWidth}%` }}></div>
+              </div>
+              <h3 className='mt-2 text-sm text-gray-500'>
+                {campaign.Category}
+              </h3>
+              <p className='text-base font-semibold text-gray-900'>
+                {campaign.CampaignName}
+              </p>
+              <p className='text-indigo-600 font-semibold'>
+                ${campaign.AmountRequired}
+              </p>
+            </Link>
+          ))}
         </div>
 
-        <Pagination />
+        <Pagination
+          totalCampaigns={totalCampaigns}
+          campaignsPerPage={campaignsPerPage}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+        />
       </div>
     </div>
   );

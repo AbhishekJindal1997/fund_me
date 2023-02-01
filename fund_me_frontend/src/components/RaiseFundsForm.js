@@ -35,6 +35,7 @@ const RaiseFundsForm = () => {
         imageTwo: imageTwo,
         imageThree: imageThree,
         imageFour: imageFour,
+        progressMeterWidth: 0,
       });
       toast.success("Campaign created successfully");
       setTimeout(() => {
@@ -191,7 +192,7 @@ const RaiseFundsForm = () => {
               <label
                 htmlFor='image'
                 className='block text-sm font-medium text-gray-700'>
-                Images Url
+                Featured Image
               </label>
               <div className='mt-1 flex rounded-md shadow-sm'>
                 <span className='inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500'>
