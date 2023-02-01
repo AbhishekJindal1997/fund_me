@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // Assets
 import { LockClosedIcon } from "@heroicons/react/20/solid";
+import logo from "../assets/logo.png";
 // Firebase authentication
 import { auth, provider } from "../config";
 import { signInWithPopup } from "firebase/auth";
@@ -30,8 +31,8 @@ const LoginForm = () => {
         <div className='w-full max-w-md space-y-8'>
           <div>
             <img
-              className='mx-auto h-12 w-auto'
-              src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600'
+              className='mx-auto h-20 w-auto'
+              src={logo}
               alt='Your Company'
             />
             <h2 className='mt-6 text-center text-3xl font-bold tracking-tight text-gray-900'>

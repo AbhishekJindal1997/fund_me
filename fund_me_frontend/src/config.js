@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "@firebase/firestore";
 const firebaseConfig = {
-  apiKey: "AIzaSyD7L6kJdtnDhNmXMtgiXuYFu0Vt1aFTdlw",
+  apiKey: process.env.REACT_APP_API_KEY,
   authDomain: "fundme-9d184.firebaseapp.com",
   projectId: "fundme-9d184",
   storageBucket: "fundme-9d184.appspot.com",

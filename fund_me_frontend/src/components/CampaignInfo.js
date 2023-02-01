@@ -27,6 +27,9 @@ const CampaignInfo = ({
   // Update progress meter in firestore database
   const updateProgressMeter = async (id, progressMeterWidth) => {
     const progressMeterDoc = doc(db, "Campaigns", id);
+    progressMeterBar = Math.ceil(
+      (totalAmount / parseFloat(AmountRequired)) * 100
+    );
     const updateField = { progressMeterWidth: progressMeterBar };
     await updateDoc(progressMeterDoc, updateField);
     console.log("progress meter bar ", progressMeterBar);
@@ -54,15 +57,23 @@ const CampaignInfo = ({
   // Hanndles Donation form
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // API calls
-    await addDoc(campaingsSubCollectionRef, {
-      Username: username,
-      Amount: amount,
-    });
 
-    toast.success("Thanks for you support.");
-    event.target.reset();
+    if (amount > DonationLimit) {
+      toast.error(`Donation cannot be more than $ ${DonationLimit}`);
+    } else {
+      // API calls
+      await addDoc(campaingsSubCollectionRef, {
+        Username: username,
+        Amount: amount,
+      });
+      toast.success("Thanks for you support.");
+      event.target.reset();
+    }
   };
+
+  useEffect(() => {
+    updateProgressMeter(id, progressMeterWidth);
+  });
 
   return (
     <div>
@@ -158,14 +169,14 @@ const CampaignInfo = ({
               $ {totalAmount}
             </dd>
           </div>
-          <div>
+          {/* <div>
             {
               (progressMeterBar = Math.ceil(
                 (totalAmount / parseFloat(AmountRequired)) * 100
               ))
             }{" "}
             %
-          </div>
+          </div> */}
         </div>
 
         {/* Donations Form */}
@@ -219,8 +230,8 @@ const CampaignInfo = ({
                 Donate Now
                 <ToastContainer
                   position='top-center'
-                  autoClose={500}
-                  hideProgressBar={true}
+                  autoClose={1000}
+                  hideProgressBar={false}
                   newestOnTop={false}
                   closeOnClick
                   rtl={false}
@@ -232,11 +243,6 @@ const CampaignInfo = ({
               </button>
             </div>
           </form>
-          <button
-            onClick={() => updateProgressMeter(id, progressMeterWidth)}
-            className='rounded-md bg-indigo-600 px-3.5 py-1.5 text-base font-semibold leading-7 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>
-            Test Now
-          </button>
         </div>
       </div>
     </div>
