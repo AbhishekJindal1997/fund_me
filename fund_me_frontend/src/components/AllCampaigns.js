@@ -16,41 +16,51 @@ const AllCampaigns = () => {
   const [campaignsPerPage] = useState(10);
   const [sorted, setSorted] = useState({ sorted: "id", reversed: false });
 
+  // tailwind ui
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+  }
+
   // Get all the camapigns information
   const getAllCampaigns = async () => {
     const data = await getDocs(campaingsCollectionRef);
     setCampaigns(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
 
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
-  }
-
+  //// FILTERING
   // filter campaigns on category
   const filteredCampaigns = campaings?.filter(
     (campaign) => campaign.Category === selectedCategory
   );
 
+  //// PAGINATION
   // Get indexes of first page, last page for pagination
   const indexOfLastCampaign = currentPage * campaignsPerPage;
   const indexOfFirstCampaign = indexOfLastCampaign - campaignsPerPage;
   // Getting the current campaign to display on screen
-  const [currentCampaign, setCurrentCampaign] = [
+  const currentCampaign =
     filteredCampaigns.length > 0
       ? filteredCampaigns?.slice(indexOfFirstCampaign, indexOfLastCampaign)
-      : campaings?.slice(indexOfFirstCampaign, indexOfLastCampaign),
-  ];
-
-  // Total campaigns length
+      : campaings?.slice(indexOfFirstCampaign, indexOfLastCampaign);
+  // getting total campaigns length for pagination
   const totalCampaigns =
     filteredCampaigns?.length > 0
       ? filteredCampaigns?.length
       : campaings?.length;
 
+  //// SORTING
+  // sorting filteredCampaigns and campaigns
+  const sortCampaigns =
+    filteredCampaigns?.length > 0 ? filteredCampaigns : campaings;
+
+  let time = "";
+  let date = "";
+
+  // console.log("timestmaps in array ", timestamps);
+  const sortedCampaign = [...sortCampaigns];
   // sorting campaigns on users
   const sortByName = () => {
     setSorted({ sorted: "name", reversed: false });
-    const sortedCampaign = [...currentCampaign];
     sortedCampaign.sort((a, b) => {
       const userA = a.RequesterName;
       const userB = b.RequesterName;
@@ -58,19 +68,30 @@ const AllCampaigns = () => {
     });
     setCampaigns(sortedCampaign);
   };
-
+  // sorting campaigns on completing soon
   const sortByCompletingSoon = () => {
     setSorted({ sorted: "progressMeterWidth", reversed: false });
-    const sortedCampaign = [...currentCampaign];
     sortedCampaign.sort((a, b) => {
       const progressMeterWidthA = a.progressMeterWidth;
       const progressMeterWidthB = b.progressMeterWidth;
       return progressMeterWidthB - progressMeterWidthA;
     });
+    console.log("completing soon ", sortedCampaign);
     setCampaigns(sortedCampaign);
   };
 
-  // Every time page loads, we call the following functions to fetch data
+  // sorting campaigns on recently created
+  const sortByRecentlyCreated = () => {
+    setSorted({ sorted: "timestamp", reversed: false });
+    sortedCampaign.sort((a, b) => {
+      const timestampA = a.timestamp;
+      const timestampB = b.timestamp;
+      return timestampB - timestampA;
+    });
+    setCampaigns(sortedCampaign);
+  };
+
+  // Page Load
   useEffect(() => {
     getAllCampaigns();
   }, []);
@@ -103,18 +124,21 @@ const AllCampaigns = () => {
               enterTo='transform opacity-100 scale-100'
               leave='transition ease-in duration-75'
               leaveFrom='transform opacity-100 scale-100'
-              leaveTo='transform opacity-0 scale-95'>
+              leaveTo='transform opacity-0 scale-95'
+            >
               <Menu.Items className='absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
                 <div className='py-1'>
                   <Menu.Item>
                     {({ active }) => (
                       <p
+                        onClick={() => sortByRecentlyCreated()}
                         className={classNames(
                           active
                             ? "bg-gray-100 text-gray-900"
                             : "text-gray-700",
                           "block px-4 py-2 text-sm cursor-pointer"
-                        )}>
+                        )}
+                      >
                         Recently Created
                       </p>
                     )}
@@ -128,7 +152,8 @@ const AllCampaigns = () => {
                             ? "bg-gray-100 text-gray-900"
                             : "text-gray-700",
                           "block px-4 py-2 text-sm cursor-pointer"
-                        )}>
+                        )}
+                      >
                         Users
                       </p>
                     )}
@@ -144,7 +169,8 @@ const AllCampaigns = () => {
                             ? "bg-gray-100 text-gray-900"
                             : "text-gray-700",
                           "block px-4 py-2 text-sm cursor-pointer"
-                        )}>
+                        )}
+                      >
                         Completing Soon
                       </p>
                     )}
@@ -173,7 +199,8 @@ const AllCampaigns = () => {
               enterTo='transform opacity-100 scale-100'
               leave='transition ease-in duration-75'
               leaveFrom='transform opacity-100 scale-100'
-              leaveTo='transform opacity-0 scale-95'>
+              leaveTo='transform opacity-0 scale-95'
+            >
               <Menu.Items className='absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
                 <div className='py-1'>
                   <Menu.Item>
@@ -185,7 +212,8 @@ const AllCampaigns = () => {
                             ? "bg-gray-100 text-gray-900"
                             : "text-gray-700",
                           "block px-4 py-2 text-sm cursor-pointer"
-                        )}>
+                        )}
+                      >
                         Climate
                       </p>
                     )}
@@ -199,7 +227,8 @@ const AllCampaigns = () => {
                             ? "bg-gray-100 text-gray-900"
                             : "text-gray-700",
                           "block px-4 py-2 text-sm cursor-pointer"
-                        )}>
+                        )}
+                      >
                         Animals
                       </p>
                     )}
@@ -213,7 +242,8 @@ const AllCampaigns = () => {
                             ? "bg-gray-100 text-gray-900"
                             : "text-gray-700",
                           "block px-4 py-2 text-sm cursor-pointer"
-                        )}>
+                        )}
+                      >
                         Education
                       </p>
                     )}
@@ -225,13 +255,14 @@ const AllCampaigns = () => {
         </div>
 
         {/* Display All the campaigns */}
-        <div className='mt-6space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0'>
+        <div className='space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0 '>
           {currentCampaign.map((campaign) => (
             <Link
               key={campaign.id}
-              className='pt-8'
+              className='pt-8 '
               to={`/campaign/${campaign.id}`}
-              state={{ campaign: campaign }}>
+              state={{ campaign: campaign }}
+            >
               <div className='relative h-80 w-full overflow-hidden rounded-lg bg-white group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1'>
                 <img
                   src={campaign.image}
@@ -242,7 +273,8 @@ const AllCampaigns = () => {
               <div className=' mt-4 w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700'>
                 <div
                   className='bg-blue-600 h-2.5 rounded-full'
-                  style={{ width: `${campaign.progressMeterWidth}%` }}></div>
+                  style={{ width: `${campaign.progressMeterWidth}%` }}
+                ></div>
               </div>
               <h3 className='mt-2 text-sm text-gray-500'>
                 {campaign.Category}
@@ -253,6 +285,22 @@ const AllCampaigns = () => {
               <h3 className=' text-sm text-gray-900'>
                 <span className='font-semibold '>Requested By:</span>{" "}
                 {campaign.RequesterName}
+              </h3>
+              <h3 className=' text-sm text-gray-900'>
+                <span className='font-semibold '>Created at:</span>{" "}
+                {
+                  (date = new Date(
+                    campaign.timestamp.seconds * 1000 +
+                      campaign.timestamp.nanoseconds / 1000000
+                  ).toDateString())
+                }{" "}
+                at{" "}
+                {
+                  (time = new Date(
+                    campaign.timestamp.seconds * 1000 +
+                      campaign.timestamp.nanoseconds / 1000000
+                  ).toLocaleTimeString())
+                }
               </h3>
 
               <p className='text-indigo-600 mt-1 font-semibold'>
