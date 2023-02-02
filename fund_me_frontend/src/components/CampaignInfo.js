@@ -58,7 +58,7 @@ const CampaignInfo = ({
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (amount > DonationLimit) {
+    if (amount > parseInt(DonationLimit)) {
       toast.error(`Donation cannot be more than $ ${DonationLimit}`);
     } else {
       // API calls
