@@ -20,6 +20,8 @@ const RaiseFundsForm = () => {
 
   const navigate = useNavigate();
 
+  const currentDate = new Date();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -36,6 +38,7 @@ const RaiseFundsForm = () => {
         imageThree: imageThree,
         imageFour: imageFour,
         progressMeterWidth: 0,
+        timestamp: currentDate,
       });
       toast.success("Campaign created successfully");
       setTimeout(() => {

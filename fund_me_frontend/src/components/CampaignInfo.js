@@ -64,7 +64,7 @@ const CampaignInfo = ({
       // API calls
       await addDoc(campaingsSubCollectionRef, {
         Username: username,
-        Amount: amount,
+        Amount: parseInt(amount),
       });
       toast.success("Thanks for you support.");
       event.target.reset();
