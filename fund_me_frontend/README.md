@@ -3,6 +3,17 @@
 - Install the application: npm install
 - Start Application: npm start
 
+### Summary
+
+- Fully Responsive
+- Browser side Error Handling in forms
+- Using tailwind css and tailwind ui for designing components
+- Hosted using firebase
+- Using cloud firestore
+- Using props and local state for state management
+- Added collections and subcollections in firestore
+- Updating, creating and reading the firestore database
+
 ### Libraries Intalled and their Commands
 
 TAILWIND CSS:
@@ -28,14 +39,3 @@ FIREBASE
 REACT-TOASTIFY
 
 - npm install --save react-toastify
-
-### Summary
-
-- Fully Responsive
-- Browser side Error Handling in forms
-- using tailwind css and tailwind ui for designing components
-- Hosted using firebase
-- Using cloud firestore
-- using props and local state for state management
-- added collections and subcollections in firestore
-- updating,creating and reading the firestore database
