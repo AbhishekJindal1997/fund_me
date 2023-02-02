@@ -22,9 +22,9 @@ const RaiseFundsForm = () => {
 
   const currentDate = new Date();
 
+  // Api call to firestore, adds a new campaign
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     try {
       await addDoc(campaingsCollectionRef, {
         AmountRequired: amountRequired,

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // Assets
 import { LockClosedIcon } from "@heroicons/react/20/solid";
-import logo from "../assets/logo.png";
+import logo from "../../assets/logo.png";
 // Firebase authentication
-import { auth, provider } from "../config";
+import { auth, provider } from "../../config";
 import { signInWithPopup } from "firebase/auth";
 
 const LoginForm = () => {
@@ -15,10 +15,14 @@ const LoginForm = () => {
 
   // Login via Google
   const googleLogin = () => {
-    signInWithPopup(auth, provider).then((data) => {
-      setValue(data.user.email);
-      localStorage.setItem("email", data.user.email);
-    });
+    try {
+      signInWithPopup(auth, provider).then((data) => {
+        setValue(data.user.email);
+        localStorage.setItem("email", data.user.email);
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {

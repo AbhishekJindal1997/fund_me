@@ -2,7 +2,7 @@ import React from "react";
 // components
 import Header from "../components/Header";
 import Background from "../components/Background";
-import AllCampaigns from "../components/AllCampaigns";
+import AllCampaigns from "../components/ExploreCampaign/AllCampaigns";
 
 const exploreCampaigns = () => {
   return (

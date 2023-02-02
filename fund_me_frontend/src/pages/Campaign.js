@@ -2,7 +2,7 @@ import React from "react";
 // components
 import Header from "../components/Header";
 import Background from "../components/Background";
-import CampaignInfo from "../components/CampaignInfo";
+import CampaignInfo from "../components/Campaign/CampaignInfo";
 import { useLocation } from "react-router-dom";
 
 const Campaign = () => {
