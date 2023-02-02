@@ -1,5 +1,6 @@
 ### Basic Commands
 
+- Install the application: npm install
 - Start Application: npm start
 
 ### Libraries Intalled and their Commands
@@ -30,10 +31,11 @@ REACT-TOASTIFY
 
 ### Summary
 
-- Responsive
+- Fully Responsive
 - Browser side Error Handling in forms
 - using tailwind css and tailwind ui for designing components
 - Hosted using firebase
+- Using cloud firestore
 - using props and local state for state management
 - added collections and subcollections in firestore
 - updating,creating and reading the firestore database
